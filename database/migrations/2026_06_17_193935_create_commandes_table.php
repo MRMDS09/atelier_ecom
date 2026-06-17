@@ -18,7 +18,13 @@ return new class extends Migration
             $table->string('telephone')->nullable()    ->index();;
             $table->string('telephone_secondaire')->nullable();
             $table->string('email')->nullable()    ->index();;    
-           $table->enum('status', [
+
+            $table->string('adresse_livraison');
+            $table->string('ville');
+            $table->string('code_postal')->nullable();
+            $table->string('pays')->default('Maroc');
+            
+            $table->enum('status', [
             'en_attente',
             'confirmee',
             'expediee',
@@ -26,10 +32,6 @@ return new class extends Migration
             'livree',
             'annulee'
             ])->default('en_attente');
-            $table->string('adresse_livraison');
-            $table->string('ville');
-            $table->string('code_postal')->nullable();
-            $table->string('pays')->default('Maroc');
 
             $table->decimal('sous_total',10,2)->default(0);
             $table->decimal('frais_livraison',10,2)->default(0);
