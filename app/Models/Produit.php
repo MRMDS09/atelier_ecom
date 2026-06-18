@@ -47,7 +47,24 @@ class Produit extends Model
     }
     public function images()
     {
-        return $this->hasMany(ProduitImage::class);
+        return $this->hasMany(
+            ProduitImage::class,
+            'produit_id',
+            'idproduit'
+        );
+    }
+
+    public function getMainImagePathAttribute(): ?string
+    {
+        if ($this->relationLoaded('images')) {
+            $image = $this->images->firstWhere('is_main', true) ?? $this->images->first();
+
+            return $image?->image ?? $this->image;
+        }
+
+        $mainImage = $this->images()->where('is_main', true)->first();
+
+        return ($mainImage ?? $this->images()->first())?->image ?? $this->image;
     }
     public function lignesCommande()
 {

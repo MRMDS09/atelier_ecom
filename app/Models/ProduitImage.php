@@ -21,9 +21,17 @@ class ProduitImage extends Model
         'image',
         'is_main'
     ];
+
+    protected $casts = [
+        'is_main' => 'boolean',
+    ];
     
-    public function product()
+    public function produit()
     {
-        return $this->belongsTo(Produit::class);
+        return $this->belongsTo(
+            Produit::class,
+            'produit_id',
+            'idproduit'
+        );
     }
 }
